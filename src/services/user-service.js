@@ -6,8 +6,8 @@ const userRepo = new UserRepository();
 async function create(data) {
      
 
-    try {
-        
+    try { 
+
         const user = await userRepo.create(data);
         return user;
 
