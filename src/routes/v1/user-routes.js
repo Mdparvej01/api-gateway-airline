@@ -4,12 +4,13 @@ const router = express.Router();
 
 const {UserController} = require('../../controllers') ;
 // const userRoutes = require('./')
+const {AuthRequestMiddleware} = require('../../middlewares')
 
 
 
-router.post('/signup' , UserController.signup) ;
+router.post('/signup' ,AuthRequestMiddleware.validateAuthRequest ,   UserController.signup) ;
 
-router.post('/signin' , UserController.signin) ;
+router.post('/signin' , AuthRequestMiddleware.validateAuthRequest , UserController.signin) ;
 
 
 module.exports = router ; 
