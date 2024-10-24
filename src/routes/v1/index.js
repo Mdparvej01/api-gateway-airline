@@ -7,7 +7,7 @@ const userRoutes = require('./user-routes');
 
 const router = express.Router();
 
-router.use('/signup' , userRoutes);
+router.use('/user' , userRoutes);
 
 
 

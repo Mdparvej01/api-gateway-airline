@@ -4,7 +4,8 @@ dotenv.config();
 
 module.exports = {
     PORT: 5001,
-    SALT_ROUNDS:8
+    SALT_ROUNDS:8,
+    
 }
 
 
