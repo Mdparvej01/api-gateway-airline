@@ -28,11 +28,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(limiter);
 
 //proxy ..
+app.use('/api', apiRoutes); 
 
 app.use('/flightsService' , createProxyMiddleware({target:'http://localhost:3000' , changeOrigin:true }))
 app.use('/bookingService' , createProxyMiddleware({target:'http://localhost:4001' , changeOrigin:true}))
 
-app.use('/api', apiRoutes);
+
 
 app.listen(ServerConfig.PORT, () => {
     console.log(`Successfully started the server on PORT : ${ServerConfig.PORT}`);
