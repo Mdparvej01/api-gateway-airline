@@ -34,8 +34,23 @@ dotenv.config();
  }
 
 
+ function verifyToken(input) {
+   try {
+
+      return jwt.verify(input , 'pikachuu47');
+
+   } catch(error) {
+      
+      console.log("error=> " , error);
+      throw error;
+
+   }
+ }
+
+
  module.exports = {
     checkPassword,
-    createToken
+    createToken,
+    verifyToken
 
  }

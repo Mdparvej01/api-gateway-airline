@@ -4,6 +4,10 @@ const {ErrorResponse}  = require('../utils/common')
 
 const AppError = require ('../utils/errors/app-error')
 
+const {UserService} = require('../services/user-service')
+
+
+
 function validateAuthRequest (req,res,next) {
     if(!req.body.email) {
         ErrorResponse.message = 'Something went wrong while creating city' ;
@@ -25,6 +29,31 @@ function validateAuthRequest (req,res,next) {
     next();
 }
 
+function checkAuth(req,res,next) {
+
+    try {
+
+        const response = UserService.isAuthenticated(req.headers['x-access-token']) ;
+
+        if(response) {
+             req.user = response;   //req.user have response
+             next();
+        }
+
+
+    } catch(error){
+           
+        return res
+                .status(403)
+                .json(error)
+
+    }
+
+
+   
+}
+
 module.exports = {
-    validateAuthRequest
+    validateAuthRequest,
+    checkAuth
 }
