@@ -1,18 +1,36 @@
 const express = require('express');
 require('dotenv').config();   
 
+const {createProxyMiddleware} = require('http-proxy-middleware')
+
 const { ServerConfig } = require('./config');
 const apiRoutes = require('./routes');
 // app.use(dotenv.config());
 const app = express();
+const rateLimit = require('express-rate-limit');
 
 
 const {Auth} = require('./utils/common')
+
+const limiter = rateLimit ({
+    windowMs:2*60*1000,  // every 2min max 3 reqs
+    max:3
+
+})
+
+
 
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(limiter);
+
+//proxy ..
+
+app.use('/flightsService' , createProxyMiddleware({target:'http://localhost:3000' , changeOrigin:true }))
+app.use('/bookingService' , createProxyMiddleware({target:'http://localhost:4001' , changeOrigin:true}))
 
 app.use('/api', apiRoutes);
 
